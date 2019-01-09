@@ -120,6 +120,26 @@ class HIVTreatment(object):
             reward = -self.reward_bound
         return reward
 
+    def typed_reward(self, action=0, state=None, **kw):
+        """Calculate the decomposed reward for the specified transition."""
+        eps1, eps2 = self.eps_values_for_actions[action]
+        if state is None:
+            state = self.observe()
+        if self.logspace:
+            _T1, _T2, _T1s, _T2s, V, E = 10**state
+        else:
+            _T1, _T2, _T1s, _T2s, V, E = state
+        
+        typed_rewards = {
+            "V: Free HI viruses": -0.1*V,
+            "Episode value 1": -2e4*eps1**2,
+            "Episode value 2": -2e3*eps2**2,
+            "E: Cytotoxic T-lymphocytes": 1e3*E,
+        }
+
+        return typed_rewards
+        
+
 
     def perform_action(self, action, perturb_params=False, p_lambda1=0, p_lambda2=0, p_k1=0, \
         p_k2=0, p_f=0, p_m1=0, p_m2=0, p_lambdaE=0, p_bE=0, p_Kb=0, p_d_E=0, p_Kd=0, **kw):
