@@ -14,7 +14,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 setup(
     name='hip-mdp-public',  # Required
-    version='0.1.0',  # Required
+    version='0.2.0',  # Required
 
     # You can just specify package directories manually here if your project is
     # simple. Or you can use find_packages().
